@@ -8,52 +8,56 @@
 
 import UIKit
 
-protocol ObjectStoreDelegate: class {
-    
+protocol ObjectStoreDelegate: class
+{
     // Require implementation.
     
-    typealias Object: BaseObject, NSCoding
+    associatedtype Object: BaseObject, NSCoding
     var objects: [Object] { set get }
     
     // Provide default implementation.
     
-    func add(object: Object)
-    func remove(object: Object)
+    func add(_ object: Object)
+    func remove(_ object: Object)
     func removeAllObjects()
     
-    func objectForIndexPath(indexPath: NSIndexPath) -> Object
+    func objectForIndexPath(_ indexPath: IndexPath) -> Object
     func count() -> Int
     
-    func save(file: String)
-    
+    func save(_ file: String)
 }
 
-extension ObjectStoreDelegate {
-    
-    func add(object: Object) {
+extension ObjectStoreDelegate
+{
+    func add(_ object: Object)
+    {
         self.objects.append(object)
     }
     
-    func remove(item: Object) {
+    func remove(_ item: Object)
+    {
         self.objects = self.objects.filter({ (storedItem) -> Bool in
             return item.identifier != storedItem.identifier
         })
     }
     
-    func removeAllObjects() {
-        self.objects.removeAll(keepCapacity: false)
+    func removeAllObjects()
+    {
+        self.objects.removeAll(keepingCapacity: false)
     }
     
-    func objectForIndexPath(indexPath: NSIndexPath) -> Object {
-        return self.objects[indexPath.row]
+    func objectForIndexPath(_ indexPath: IndexPath) -> Object
+    {
+        return self.objects[(indexPath as NSIndexPath).row]
     }
     
-    func count() -> Int {
+    func count() -> Int
+    {
         return self.objects.count
     }
     
-    func save(file: String) {
+    func save(_ file: String)
+    {
         NSKeyedArchiver.archiveRootObject(self.objects, toFile: file)
-    }
-    
+    }    
 }

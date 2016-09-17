@@ -8,29 +8,33 @@
 
 import UIKit
 
-class NewItemViewController: UIViewController {
-    
+class NewItemViewController: UIViewController
+{
     @IBOutlet weak var todoTextField: UITextField!
     
-    class func identifier() -> String {
+    class func identifier() -> String
+    {
         return "NewItemViewController"
     }
 
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         self.navigationItem.title = "New"
     }
 
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
     }
     
-    @IBAction func saveButtonSelected(sender: AnyObject) {
-        guard let navigationController = self.navigationController else { fatalError("Where did Navigation Controller go? Error origin: \(__FUNCTION__)") }
+    @IBAction func saveButtonSelected(_ sender: AnyObject)
+    {
+        guard let navigationController = self.navigationController else { fatalError("Where did Navigation Controller go? Error origin: \(#function)") }
         guard let description = self.todoTextField.text else { return }
         
         Store.shared.add(Item(description: description))
-        navigationController.popViewControllerAnimated(true)
+        navigationController.popViewController(animated: true)
     }
     
 }

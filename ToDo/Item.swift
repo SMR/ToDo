@@ -8,29 +8,31 @@
 
 import Foundation
 
-class Item: BaseObject, NSCoding {
-    
+class Item: BaseObject, NSCoding
+{
     var itemDescription: String
-    var itemDate: NSDate
+    var itemDate: Date
     
-    init(description: String, date: NSDate = NSDate()) {
+    init(description: String, date: Date = Date())
+    {
         self.itemDescription = description
         self.itemDate = date
     }
     
     // MARK: NSCoding
     
-    @objc required convenience init?(coder aDecoder: NSCoder) {
-        guard let description = aDecoder.decodeObjectForKey("itemDescription") as? String else { fatalError("No description.") }
-        guard let date = aDecoder.decodeObjectForKey("itemDate") as? NSDate else { fatalError("No date.") }
+    @objc required convenience init?(coder aDecoder: NSCoder)
+    {
+        guard let description = aDecoder.decodeObject(forKey: "itemDescription") as? String else { fatalError("No description.") }
+        guard let date = aDecoder.decodeObject(forKey: "itemDate") as? Date else { fatalError("No date.") }
 
         // After we get all of our data, let's initialize the actual object.
         self.init(description: description, date: date)
     }
     
-    @objc func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(self.itemDescription, forKey: "itemDescription")
-        aCoder.encodeObject(self.itemDate, forKey: "itemDate")
+    @objc func encode(with aCoder: NSCoder)
+    {
+        aCoder.encode(self.itemDescription, forKey: "itemDescription")
+        aCoder.encode(self.itemDate, forKey: "itemDate")
     }
-    
 }

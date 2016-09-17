@@ -8,14 +8,14 @@
 
 import Foundation
 
-class Store: ObjectStoreDelegate {
-    
+class Store: ObjectStoreDelegate
+{
     static let shared = Store()
     
-    private init() {
+    private init()
+    {
         if let
-            data = NSData(contentsOfURL: NSURL.archiveURL()),
-            storedItems = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? [Item] {
+            data = try? Data(contentsOf: URL.archiveURL()), let storedItems = NSKeyedUnarchiver.unarchiveObject(with: data) as? [Item] {
             self.objects = storedItems
         }
     }

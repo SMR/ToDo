@@ -8,24 +8,27 @@
 
 import Foundation
 
-extension String {
-    
-    static func archivePath() -> String {
-        guard let archivePath = NSURL.archiveURL().path else { fatalError("Can't get archive path. Error origin: \(__FUNCTION__)") }
-        return archivePath
+extension String
+{
+    static func archivePath() -> String
+    {
+        return URL.archiveURL().path
     }
     
 }
 
-extension NSURL {
-    
-    class func documentsDirectory() -> NSURL {
-        guard let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first else { fatalError("Error getting Documents directory. Error origin: \(__FUNCTION__)") }
+extension URL
+{
+    static func documentsDirectory() -> URL
+    {
+        
+        guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { fatalError("Error getting Documents directory. Error origin: \(#function)") }
         return documentsDirectory
     }
     
-    class func archiveURL(storeId: String = "archive") -> NSURL {
-        return self.documentsDirectory().URLByAppendingPathComponent(storeId)
+    static func archiveURL(_ storeId: String = "archive") -> URL
+    {
+        return self.documentsDirectory().appendingPathComponent(storeId)
     }
     
 }

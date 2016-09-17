@@ -8,13 +8,13 @@
 
 import UIKit
 
-class BaseObject: NSObject {
-    
+class BaseObject: NSObject
+{
     let identifier: String
     
-    override init() {
-        self.identifier = NSUUID().UUIDString
+    override init()
+    {
+        self.identifier = UUID().uuidString
         super.init()
     }
-    
 }
